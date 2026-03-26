@@ -17,8 +17,14 @@ pnpm-debug.log*
 .env
 .env.production
 
+# tracker data (contains API keys)
+data/trackers.json
+
 # macOS-specific files
 .DS_Store
 
 # jetbrains setting folder
 .idea/
+
+# data directory
+data

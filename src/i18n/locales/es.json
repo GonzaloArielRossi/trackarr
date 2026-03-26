@@ -1,0 +1,108 @@
+{
+  "meta": {
+    "title": "Trackarr"
+  },
+  "header": {
+    "brand": "Trackarr",
+    "manage": "Administrar",
+    "addTracker": "Añadir tracker",
+    "trackerCount_one": "{{count}} tracker",
+    "trackerCount_other": "{{count}} trackers"
+  },
+  "dashboard": {
+    "welcomeTitle": "Bienvenido a Trackarr",
+    "welcomeBody": "Unifica las estadísticas y el feed de todos tus trackers UNIT3D en un solo panel. Añade tu primer tracker para empezar.",
+    "addFirstTracker": "Añadir tu primer tracker",
+    "removeConfirm": "¿Eliminar {{name}}? Se borrarán las claves guardadas."
+  },
+  "stats": {
+    "sectionTitle": "Tus trackers",
+    "sectionTitleBoth": "Trackers y feeds RSS",
+    "layoutAria": "Disposición de las tarjetas de trackers",
+    "layout": {
+      "strip": "Una fila con desplazamiento horizontal",
+      "grid": "Cuadrícula adaptable",
+      "list": "Lista apilada"
+    },
+    "ratio": "Ratio",
+    "seeding": "Sembrando",
+    "leeching": "Descargando",
+    "uploaded": "Subido",
+    "downloaded": "Descargado",
+    "buffer": "Buffer",
+    "seedBonus": "Bonus de semilla",
+    "hitAndRuns": "Hit & runs",
+    "editTracker": "Editar tracker",
+    "removeTracker": "Quitar tracker"
+  },
+  "feed": {
+    "sectionTitle": "Últimos lanzamientos",
+    "searchPlaceholder": "Buscar lanzamientos…",
+    "allTrackers": "Todos los trackers",
+    "allCategories": "Todas las categorías",
+    "allResolutions": "Todas las resoluciones",
+    "freeleech": "Freeleech",
+    "internal": "Interno",
+    "doubleUpload": "2x subida",
+    "releasesCount_one": "{{count}} lanzamiento",
+    "releasesCount_other": "{{count}} lanzamientos",
+    "releasesFiltered": "{{filtered}} de {{total}}",
+    "noReleases": "Aún no hay lanzamientos",
+    "noReleasesHint": "Añade un tracker para ver los últimos torrents",
+    "noFilterMatch": "Ningún lanzamiento coincide con los filtros",
+    "clearFilters": "Quitar todos los filtros"
+  },
+  "time": {
+    "justNow": "ahora",
+    "minutesAgo": "hace {{count}} min",
+    "hoursAgo": "hace {{count}} h",
+    "daysAgo": "hace {{count}} d",
+    "monthsAgo": "hace {{count}} mes"
+  },
+  "dialog": {
+    "addTracker": "Añadir tracker",
+    "editTracker": "Editar tracker",
+    "trackerName": "Nombre del tracker",
+    "baseUrl": "URL base",
+    "iconLetters": "Insignia (máx. 3 letras)",
+    "iconLettersHintShort": "Por defecto: las primeras 3 letras del nombre. Puedes editarlas.",
+    "badgePalette": "Paleta de la insignia",
+    "badgePaletteHint": "Haz clic en una opción. Por defecto se sugiere según el nombre hasta que elijas una.",
+    "iconPlaceholder": "ej. HDZ",
+    "apiKey": "Clave API",
+    "apiKeyPlaceholder": "Para estadísticas (vacío si solo RSS)",
+    "apiKeyPlaceholderEdit": "Vacío para mantener la clave actual",
+    "apiKeyHint": "En el perfil del tracker: Seguridad → API Token",
+    "rssKey": "Clave RSS",
+    "rssKeyPlaceholder": "Para RSS (vacío si solo API)",
+    "rssKeyPlaceholderEdit": "Vacío para mantener la actual",
+    "rssKeyHint": "En el perfil del tracker: Seguridad → RSS Key",
+    "rssKeyUnit3dOnly": "Los lanzamientos vía RSS en Últimos lanzamientos solo funcionan con trackers UNIT3D. La app construye la URL del feed a partir de la URL base y la clave RSS. Prefiere la clave API si el tracker la ofrece.",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "saving": "Guardando…",
+    "addSubmit": "Añadir tracker",
+    "deleteTracker": "Eliminar tracker",
+    "deleteConfirmTitle": "¿Eliminar este tracker?",
+    "deleteConfirm": "Eliminar",
+    "errors": {
+      "nameAndUrl": "Introduce el nombre del tracker y la URL base.",
+      "atLeastOneKey": "Introduce al menos la clave API o la clave RSS.",
+      "unknown": "Error desconocido"
+    }
+  },
+  "selector": {
+    "searchOrUrl": "Buscar o pegar URL",
+    "searchOrUrlPlaceholder": "Nombre del tracker o URL…",
+    "noMatches": "Sin resultados",
+    "createWithUrl": "Crear tracker con {{url}}"
+  },
+  "manage": {
+    "title": "Tus trackers",
+    "edit": "Editar"
+  },
+  "lang": {
+    "es": "Español",
+    "en": "English"
+  }
+}

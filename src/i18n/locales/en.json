@@ -1,0 +1,108 @@
+{
+  "meta": {
+    "title": "Trackarr"
+  },
+  "header": {
+    "brand": "Trackarr",
+    "manage": "Manage",
+    "addTracker": "Add Tracker",
+    "trackerCount_one": "{{count}} tracker",
+    "trackerCount_other": "{{count}} trackers"
+  },
+  "dashboard": {
+    "welcomeTitle": "Welcome to Trackarr",
+    "welcomeBody": "Unify all your UNIT3D tracker stats and feeds in one dashboard. Add your first tracker to get started.",
+    "addFirstTracker": "Add Your First Tracker",
+    "removeConfirm": "Remove {{name}}? This will delete the stored API keys."
+  },
+  "stats": {
+    "sectionTitle": "Your Trackers",
+    "sectionTitleBoth": "Trackers & RSS feeds",
+    "layoutAria": "Layout for tracker cards",
+    "layout": {
+      "strip": "Single row, horizontal scroll",
+      "grid": "Responsive grid",
+      "list": "Stacked list"
+    },
+    "ratio": "Ratio",
+    "seeding": "Seeding",
+    "leeching": "Leeching",
+    "uploaded": "Uploaded",
+    "downloaded": "Downloaded",
+    "buffer": "Buffer",
+    "seedBonus": "Seed Bonus",
+    "hitAndRuns": "Hit & Runs",
+    "editTracker": "Edit tracker",
+    "removeTracker": "Remove tracker"
+  },
+  "feed": {
+    "sectionTitle": "Latest Releases",
+    "searchPlaceholder": "Search releases…",
+    "allTrackers": "All Trackers",
+    "allCategories": "All Categories",
+    "allResolutions": "All Resolutions",
+    "freeleech": "Freeleech",
+    "internal": "Internal",
+    "doubleUpload": "2x upload",
+    "releasesCount_one": "{{count}} release",
+    "releasesCount_other": "{{count}} releases",
+    "releasesFiltered": "{{filtered}} of {{total}}",
+    "noReleases": "No releases yet",
+    "noReleasesHint": "Add a tracker to see the latest torrents",
+    "noFilterMatch": "No releases match your filters",
+    "clearFilters": "Clear all filters"
+  },
+  "time": {
+    "justNow": "just now",
+    "minutesAgo": "{{count}}m ago",
+    "hoursAgo": "{{count}}h ago",
+    "daysAgo": "{{count}}d ago",
+    "monthsAgo": "{{count}}mo ago"
+  },
+  "dialog": {
+    "addTracker": "Add Tracker",
+    "editTracker": "Edit Tracker",
+    "trackerName": "Tracker name",
+    "baseUrl": "Base URL",
+    "iconLetters": "Badge (max 3 letters)",
+    "iconLettersHintShort": "Defaults to the first 3 letters of the name. You can edit them.",
+    "badgePalette": "Badge palette",
+    "badgePaletteHint": "Click a swatch. The default follows the name until you pick one.",
+    "iconPlaceholder": "e.g. HDZ",
+    "apiKey": "API Key",
+    "apiKeyPlaceholder": "For stats (leave empty if RSS-only)",
+    "apiKeyPlaceholderEdit": "Leave blank to keep current key",
+    "apiKeyHint": "Found in your tracker profile under Security → API Token",
+    "rssKey": "RSS Key",
+    "rssKeyPlaceholder": "For RSS (leave empty if API-only)",
+    "rssKeyPlaceholderEdit": "Leave blank to keep current",
+    "rssKeyHint": "Found in your tracker profile under Security → RSS Key",
+    "rssKeyUnit3dOnly": "RSS-based releases in Latest Releases only work with UNIT3D trackers. The app builds the feed URL from your base URL and RSS key. Prefer an API key when your tracker supports it.",
+    "cancel": "Cancel",
+    "save": "Save",
+    "saving": "Saving…",
+    "addSubmit": "Add Tracker",
+    "deleteTracker": "Remove tracker",
+    "deleteConfirmTitle": "Remove this tracker?",
+    "deleteConfirm": "Remove",
+    "errors": {
+      "nameAndUrl": "Enter the tracker name and base URL.",
+      "atLeastOneKey": "Enter at least an API key or an RSS key.",
+      "unknown": "Unknown error"
+    }
+  },
+  "selector": {
+    "searchOrUrl": "Search or paste URL",
+    "searchOrUrlPlaceholder": "Tracker name or URL…",
+    "noMatches": "No matches",
+    "createWithUrl": "Create tracker with {{url}}"
+  },
+  "manage": {
+    "title": "Your trackers",
+    "edit": "Edit"
+  },
+  "lang": {
+    "es": "Español",
+    "en": "English"
+  }
+}

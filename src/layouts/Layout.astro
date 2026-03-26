@@ -1,23 +1,18 @@
+---
+import '@/styles/global.css';
+---
+
 <!doctype html>
-<html lang="en">
+<html lang="es" class="dark">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" href="/logo.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>Trackarr</title>
 	</head>
-	<body>
+	<body class="min-h-screen bg-surface-900 text-gray-100 antialiased">
 		<slot />
 	</body>
 </html>
-
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
