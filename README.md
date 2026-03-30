@@ -49,22 +49,24 @@ Image on Docker Hub: [`gonzaloarielrossiar/trackarr`](https://hub.docker.com/r/g
 
 #### Docker Compose
 
-From the directory that contains `docker-compose.yml`:
+```
+services:
+  trackarr:
+    image: gonzaloarielrossiar/trackarr:latest
+    container_name: trackarr
+    ports:
+      - "6875:6875"
+    environment:
+      TMDB_API_KEY: ${TMDB_API_KEY:-} # Optional, but recommended for poster rss feeds that don't provide posters
+    volumes:
+      - trackarr_data:/app/data
+    restart: unless-stopped
 
-| Step | Command |
-|------|---------|
-| Start (detached, after pulling latest) | `docker compose pull && docker compose up -d` |
-| Start (foreground logs) | `docker compose up` |
-| Stop | `docker compose stop` |
-| Stop and remove containers | `docker compose down` |
-| Remove containers and the named volume (deletes tracker data) | `docker compose down -v` |
-| Logs (follow) | `docker compose logs -f` |
+volumes:
+  trackarr_data:
 
-The compose file maps host port **6875** to the same port inside the container; that port is defined at build time in `astro.config.mjs` (`server.port`). Open **http://localhost:6875**.
+```
 
-Tracker configuration lives in a Docker named volume (`trackarr_data` → `/app/data` in the container), not on your host filesystem by default.
-
-Optional **TMDb** key: create a `.env` file next to `docker-compose.yml` (you can start from `.env.example`) or export variables before `compose up`:
 
 ```bash
 export TMDB_API_KEY=your_key
