@@ -2,6 +2,17 @@
 
 A local dashboard for **UNIT3D** private trackers: per-tracker stats (ratio, buffer, seeding, and more) and a unified **Latest Releases** RSS feed grid from your configured sources.
 
+## Screenshots
+
+![Trackarr screenshot 1](https://i.imgur.com/wG5quLX.png)
+
+![Trackarr screenshot 2](https://i.imgur.com/2B8sFSq.png)
+
+![Trackarr screenshot 3](https://i.imgur.com/QCwH9i3.png)
+
+![Trackarr screenshot 4](https://imgur.com/tlP8ho3.png)
+
+
 ## Requirements
 
 - **Node.js** 22.12 or newer
