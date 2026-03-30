@@ -1,0 +1,14 @@
+services:
+  trackarr:
+    image: gonzaloarielrossiar/trackarr:latest
+    container_name: trackarr
+    ports:
+      - "6875:6875"
+    environment:
+      TMDB_API_KEY: ${TMDB_API_KEY:-} # Optional, but recommended for poster rss feeds that don't provide posters
+    volumes:
+      - trackarr_data:/app/data
+    restart: unless-stopped
+
+volumes:
+  trackarr_data:
