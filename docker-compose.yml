@@ -1,7 +1,7 @@
 services:
   trackarr:
     image: gonzaloarielrossiar/trackarr:latest
-    name: trackarr
+    container_name: trackarr
     ports:
       - "6875:6875"
     environment:
