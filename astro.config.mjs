@@ -7,4 +7,8 @@ export default defineConfig({
   output: 'server',
   adapter: node({ mode: 'standalone' }),
   integrations: [react()],
+  server: {
+    port: 6875,
+    host: true,
+  },
 });

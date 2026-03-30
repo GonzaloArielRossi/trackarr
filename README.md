@@ -1,6 +1,6 @@
 # Trackarr
 
-A local dashboard for **UNIT3D** private trackers: per-tracker stats (ratio, buffer, seeding, and more) and a unified **Latest Releases** grid from your configured sources.
+A local dashboard for **UNIT3D** private trackers: per-tracker stats (ratio, buffer, seeding, and more) and a unified **Latest Releases** RSS feed grid from your configured sources.
 
 ## Requirements
 
@@ -20,7 +20,7 @@ Edit `.env` and set `TMDB_API_KEY` if you want poster images filled in when a re
 pnpm dev
 ```
 
-Open the URL shown in the terminal (usually `http://localhost:4321`).
+Open the URL shown in the terminal (see `server.port` in `astro.config.mjs`, usually `http://localhost:6875`).
 
 ## Scripts
 
@@ -40,3 +40,59 @@ Open the URL shown in the terminal (usually `http://localhost:4321`).
 ## Production
 
 Build the app, then run the Node adapter output (see [Astro SSR with `@astrojs/node`](https://docs.astro.build/en/guides/server-side-rendering/)). Set `TMDB_API_KEY` in the environment where the server runs.
+
+The HTTP port and listen address for both `pnpm dev` and the production Node server are set in [`astro.config.mjs`](astro.config.mjs) under `server.port` and `server.host` (currently **6875** and all interfaces). Change them there and rebuild before publishing a new image.
+
+### Docker
+
+Image on Docker Hub: [`gonzaloarielrossiar/trackarr`](https://hub.docker.com/r/gonzaloarielrossiar/trackarr).
+
+#### Docker Compose
+
+From the directory that contains `docker-compose.yml`:
+
+| Step | Command |
+|------|---------|
+| Start (detached, after pulling latest) | `docker compose pull && docker compose up -d` |
+| Start (foreground logs) | `docker compose up` |
+| Stop | `docker compose stop` |
+| Stop and remove containers | `docker compose down` |
+| Remove containers and the named volume (deletes tracker data) | `docker compose down -v` |
+| Logs (follow) | `docker compose logs -f` |
+
+The compose file maps host port **6875** to the same port inside the container; that port is defined at build time in `astro.config.mjs` (`server.port`). Open **http://localhost:6875**.
+
+Tracker configuration lives in a Docker named volume (`trackarr_data` → `/app/data` in the container), not on your host filesystem by default.
+
+Optional **TMDb** key: create a `.env` file next to `docker-compose.yml` (you can start from `.env.example`) or export variables before `compose up`:
+
+```bash
+export TMDB_API_KEY=your_key
+docker compose up -d
+```
+
+#### Docker CLI (`docker run`)
+
+Run the same image without Compose:
+
+```bash
+docker pull gonzaloarielrossiar/trackarr:latest
+```
+
+The image listens on the port baked in at build time from `server.port` in `astro.config.mjs` (currently **6875**). Map it explicitly on the host:
+
+```bash
+# Foreground
+docker run --rm --name trackarr -p 6875:6875 \
+  -v trackarr_data:/app/data \
+  gonzaloarielrossiar/trackarr:latest
+
+# Detached, with TMDb key
+docker run -d --name trackarr --restart unless-stopped \
+  -p 6875:6875 \
+  -v trackarr_data:/app/data \
+  -e TMDB_API_KEY=your_key \
+  gonzaloarielrossiar/trackarr:latest
+```
+
+Replace `your_key` or omit `-e TMDB_API_KEY=...` if you do not use TMDb. Use `docker stop trackarr` and `docker rm trackarr` to stop and remove the container; the volume `trackarr_data` keeps your data until you remove it with `docker volume rm trackarr_data`.
