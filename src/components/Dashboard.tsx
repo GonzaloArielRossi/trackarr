@@ -60,14 +60,14 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-surface-900">
+    <div className="min-h-screen min-w-0 overflow-x-clip bg-surface-900">
       <Header
         onAddTracker={openAddDialog}
         onManageTrackers={hasSources ? () => setManageOpen(true) : undefined}
         trackerCount={trackers.length}
       />
 
-      <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+      <main className="mx-auto min-w-0 max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         {loading ? (
           <div className="flex items-center justify-center py-20">
             <div className="h-8 w-8 animate-spin rounded-full border-2 border-surface-500 border-t-accent-400" />

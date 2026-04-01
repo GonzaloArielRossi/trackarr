@@ -1,6 +1,8 @@
+import { PencilSimple } from '@phosphor-icons/react';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { useBodyScrollLock } from '@/hooks/useBodyScrollLock';
 import { BADGE_PALETTES, defaultPaletteIndex } from '@/lib/icon-colors';
 import type { TrackerRegistryEntry, TrackerPublic } from '@/lib/types';
 import { defaultBadgeLetters, normalizeIconAlias } from '@/lib/tracker-alias';
@@ -38,6 +40,9 @@ export default function AddTrackerDialog({ open, editingTracker, onClose, onSave
   const [error, setError] = useState<string | null>(null);
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [paletteEditorOpen, setPaletteEditorOpen] = useState(false);
+
+  useBodyScrollLock(open);
 
   useEffect(() => {
     if (open) {
@@ -50,6 +55,7 @@ export default function AddTrackerDialog({ open, editingTracker, onClose, onSave
 
   useEffect(() => {
     if (!open) return;
+    setPaletteEditorOpen(false);
     if (isEdit && editingTracker) {
       setSelectedEntry(null);
       setName(editingTracker.name);
@@ -232,9 +238,21 @@ export default function AddTrackerDialog({ open, editingTracker, onClose, onSave
 
   return (
     <>
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="fixed inset-0 bg-black/60 backdrop-blur-sm" onClick={handleClose} />
-      <div className="relative max-h-[90vh] w-full max-w-md overflow-y-auto rounded-2xl border border-surface-600 bg-surface-800 p-6 shadow-2xl">
+    <div
+      className="fixed inset-0 z-50 overflow-y-auto overscroll-contain"
+      role="presentation"
+    >
+      <div
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm"
+        aria-hidden
+        onClick={handleClose}
+      />
+      <div className="relative z-10 flex min-h-full justify-center p-4 sm:items-center sm:py-8">
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="relative my-4 w-full max-w-md max-h-[min(90dvh,calc(100dvh-2rem))] overflow-y-auto overscroll-y-contain touch-pan-y rounded-2xl border border-surface-600 bg-surface-800 p-6 shadow-2xl sm:my-0"
+        >
         <div className="mb-5 flex items-center justify-between">
           <h2 className="text-lg font-semibold text-white">{isEdit ? t('dialog.editTracker') : t('dialog.addTracker')}</h2>
           <button
@@ -283,12 +301,28 @@ export default function AddTrackerDialog({ open, editingTracker, onClose, onSave
           <div>
             <label className="mb-1 block text-xs font-medium text-gray-300">{t('dialog.iconLetters')}</label>
             <div className="flex items-center gap-3">
-              <GeneratedIcon
-                name={name || '?'}
-                iconAlias={badgeLetters || undefined}
-                paletteIndex={paletteIndex}
-                size={40}
-              />
+              <button
+                type="button"
+                onClick={() => setPaletteEditorOpen((v) => !v)}
+                aria-expanded={paletteEditorOpen}
+                aria-controls="badge-palette-editor"
+                title={paletteEditorOpen ? t('dialog.closeBadgePalette') : t('dialog.openBadgePalette')}
+                aria-label={paletteEditorOpen ? t('dialog.closeBadgePalette') : t('dialog.openBadgePalette')}
+                className="group relative shrink-0 rounded-xl ring-2 ring-transparent transition-[box-shadow,ring-color] hover:ring-surface-500 focus-visible:outline-none focus-visible:ring-accent-400"
+              >
+                <GeneratedIcon
+                  name={name || '?'}
+                  iconAlias={badgeLetters || undefined}
+                  paletteIndex={paletteIndex}
+                  size={40}
+                />
+                <span
+                  className="pointer-events-none absolute -bottom-0.5 -right-0.5 flex h-5 w-5 items-center justify-center rounded-full border border-surface-500 bg-surface-700 text-gray-200 shadow-md ring-2 ring-surface-800"
+                  aria-hidden
+                >
+                  <PencilSimple size={11} weight="bold" className="text-accent-400" />
+                </span>
+              </button>
               <input
                 type="text"
                 value={badgeLetters}
@@ -303,30 +337,32 @@ export default function AddTrackerDialog({ open, editingTracker, onClose, onSave
               />
             </div>
             <p className="mt-1 text-[11px] text-gray-500">{t('dialog.iconLettersHintShort')}</p>
-          </div>
 
-          <div>
-            <label className="mb-1 block text-xs font-medium text-gray-300">{t('dialog.badgePalette')}</label>
-            <div className="grid grid-cols-5 gap-2">
-              {BADGE_PALETTES.map((p, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  onClick={() => {
-                    setPaletteTouched(true);
-                    setPaletteIndex(i);
-                  }}
-                  title={`${i + 1}`}
-                  className={`flex h-10 items-center justify-center rounded-md border-2 text-xs font-bold transition-colors ${
-                    paletteIndex === i ? 'border-accent-400 ring-1 ring-accent-400/50' : 'border-surface-600 hover:border-surface-500'
-                  }`}
-                  style={{ backgroundColor: p.bg, color: p.fg }}
-                >
-                  A
-                </button>
-              ))}
-            </div>
-            <p className="mt-1 text-[11px] text-gray-500">{t('dialog.badgePaletteHint')}</p>
+            {paletteEditorOpen && (
+              <div id="badge-palette-editor" className="mt-4 rounded-xl border border-surface-600/80 bg-surface-800/50 p-3">
+                <p className="mb-2 text-xs font-medium text-gray-300">{t('dialog.badgePalette')}</p>
+                <div className="grid grid-cols-5 gap-2">
+                  {BADGE_PALETTES.map((p, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => {
+                        setPaletteTouched(true);
+                        setPaletteIndex(i);
+                      }}
+                      title={`${i + 1}`}
+                      className={`flex h-10 items-center justify-center rounded-md border-2 text-xs font-bold transition-colors ${
+                        paletteIndex === i ? 'border-accent-400 ring-1 ring-accent-400/50' : 'border-surface-600 hover:border-surface-500'
+                      }`}
+                      style={{ backgroundColor: p.bg, color: p.fg }}
+                    >
+                      A
+                    </button>
+                  ))}
+                </div>
+                <p className="mt-2 text-[11px] text-gray-500">{t('dialog.badgePaletteHint')}</p>
+              </div>
+            )}
           </div>
 
           <div>
@@ -351,9 +387,6 @@ export default function AddTrackerDialog({ open, editingTracker, onClose, onSave
               className="w-full rounded-lg border border-surface-600 bg-surface-700 px-3 py-2 text-sm text-gray-100 placeholder-gray-500 outline-none focus:border-accent-500 focus:ring-1 focus:ring-accent-500/50"
             />
             <p className="mt-1 text-[11px] text-gray-500">{t('dialog.rssKeyHint')}</p>
-            <p className="mt-2 rounded-lg border border-surface-600/80 bg-surface-800/80 px-3 py-2 text-[11px] leading-relaxed text-gray-400">
-              {t('dialog.rssKeyUnit3dOnly')}
-            </p>
           </div>
 
           {error && (
@@ -363,40 +396,41 @@ export default function AddTrackerDialog({ open, editingTracker, onClose, onSave
           )}
 
           <div
-            className={`flex items-center justify-between gap-3 pt-2 ${isEdit ? 'border-t border-surface-700' : ''}`}
+            className={`flex flex-col gap-3 pt-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4 ${isEdit ? 'border-t border-surface-700' : ''}`}
           >
-            <div className="min-w-0 flex-1">
-              {isEdit && editingTracker && onDeleted && (
-                <button
-                  type="button"
-                  onClick={() => setDeleteConfirmOpen(true)}
-                  className="rounded-lg border border-danger-500/40 bg-danger-500/10 px-4 py-2 text-sm font-medium text-danger-400 transition-colors hover:bg-danger-500/20"
-                >
-                  {t('dialog.deleteTracker')}
-                </button>
-              )}
-            </div>
-            <div className="flex shrink-0 justify-end gap-3">
+            <div className="order-1 flex w-full gap-2 sm:order-2 sm:ml-auto sm:w-auto sm:justify-end sm:gap-3">
               <button
                 type="button"
                 onClick={handleClose}
-                className="rounded-lg px-4 py-2 text-sm font-medium text-gray-400 transition-colors hover:bg-surface-700 hover:text-white"
+                className="min-h-11 min-w-0 flex-1 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-400 transition-colors hover:bg-surface-700 hover:text-white sm:min-h-0 sm:flex-none sm:px-4 sm:py-2"
               >
                 {t('dialog.cancel')}
               </button>
               <button
                 type="submit"
                 disabled={submitting}
-                className="inline-flex items-center gap-2 rounded-lg bg-accent-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-accent-600 disabled:cursor-not-allowed disabled:opacity-50"
+                className="inline-flex min-h-11 min-w-0 flex-1 items-center justify-center gap-2 rounded-lg bg-accent-500 px-3 py-2.5 text-sm font-medium text-white transition-colors hover:bg-accent-600 disabled:cursor-not-allowed disabled:opacity-50 sm:min-h-0 sm:flex-none sm:px-4 sm:py-2"
               >
                 {submitting && (
-                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                  <div className="h-4 w-4 shrink-0 animate-spin rounded-full border-2 border-white/30 border-t-white" />
                 )}
-                {submitting ? t('dialog.saving') : isEdit ? t('dialog.save') : t('dialog.addSubmit')}
+                <span className="truncate">
+                  {submitting ? t('dialog.saving') : isEdit ? t('dialog.save') : t('dialog.addSubmit')}
+                </span>
               </button>
             </div>
+            {isEdit && editingTracker && onDeleted && (
+              <button
+                type="button"
+                onClick={() => setDeleteConfirmOpen(true)}
+                className="order-2 w-full rounded-lg border border-danger-500/40 bg-danger-500/10 px-4 py-2.5 text-sm font-medium text-danger-400 transition-colors hover:bg-danger-500/20 sm:order-1 sm:w-auto sm:shrink-0 sm:py-2"
+              >
+                {t('dialog.deleteTracker')}
+              </button>
+            )}
           </div>
         </form>
+        </div>
       </div>
     </div>
 

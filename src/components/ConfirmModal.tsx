@@ -1,3 +1,5 @@
+import { useBodyScrollLock } from '@/hooks/useBodyScrollLock';
+
 interface ConfirmModalProps {
   open: boolean;
   title: string;
@@ -21,17 +23,27 @@ export default function ConfirmModal({
   loading = false,
   danger = true,
 }: ConfirmModalProps) {
+  useBodyScrollLock(open);
+
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-60 flex items-center justify-center p-4">
-      <div className="fixed inset-0 bg-black/70 backdrop-blur-sm" onClick={() => !loading && onCancel()} />
+    <div
+      className="fixed inset-0 z-60 overflow-y-auto overscroll-contain"
+      role="presentation"
+    >
       <div
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="confirm-modal-title"
-        className="relative w-full max-w-sm rounded-2xl border border-surface-600 bg-surface-800 p-5 shadow-2xl"
-      >
+        className="fixed inset-0 bg-black/70 backdrop-blur-sm"
+        aria-hidden
+        onClick={() => !loading && onCancel()}
+      />
+      <div className="relative z-10 flex min-h-full justify-center p-4 sm:items-center sm:py-8">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="confirm-modal-title"
+          className="relative my-4 w-full max-w-sm rounded-2xl border border-surface-600 bg-surface-800 p-5 shadow-2xl sm:my-0"
+        >
         <h2 id="confirm-modal-title" className="mb-2 text-lg font-semibold text-white">
           {title}
         </h2>
@@ -58,6 +70,7 @@ export default function ConfirmModal({
             )}
             {confirmLabel}
           </button>
+        </div>
         </div>
       </div>
     </div>

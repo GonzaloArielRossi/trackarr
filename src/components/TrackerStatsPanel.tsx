@@ -68,13 +68,13 @@ export default function TrackerStatsPanel({ trackers, onEditTracker }: TrackerSt
 
   const containerClass =
     layout === 'strip'
-      ? 'flex flex-nowrap gap-4 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-gutter:stable] snap-x snap-mandatory [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-surface-600 [&::-webkit-scrollbar-track]:bg-transparent'
+      ? 'flex min-w-0 max-w-full flex-nowrap gap-4 overflow-x-auto overflow-y-visible pb-2 [-ms-overflow-style:none] [scrollbar-gutter:stable] snap-x snap-mandatory [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-surface-600 [&::-webkit-scrollbar-track]:bg-transparent'
       : layout === 'grid'
         ? 'grid grid-cols-1 gap-4 sm:grid-cols-2 2xl:grid-cols-3'
         : 'flex flex-col gap-4';
 
   return (
-    <section>
+    <section className="min-w-0 max-w-full">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-400">{t('stats.sectionTitle')}</h2>
         <TrackerStatsLayoutPicker value={layout} onChange={handleLayoutChange} />

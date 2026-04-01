@@ -70,12 +70,12 @@ export default function FeedFilters({ filters, onChange, trackers, categories, r
       </div>
 
       {/* Filter chips row */}
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="flex min-w-0 max-w-full flex-wrap items-center gap-2">
         {/* Tracker filter */}
         <select
           value={filters.tracker}
           onChange={(e) => set({ tracker: e.target.value })}
-          className="rounded-lg border border-surface-600 bg-surface-700/50 px-3 py-1.5 text-xs text-gray-300 outline-none focus:border-accent-500"
+          className="max-w-full min-w-0 shrink rounded-lg border border-surface-600 bg-surface-700/50 px-3 py-1.5 text-xs text-gray-300 outline-none focus:border-accent-500"
         >
           <option value="">{t('feed.allTrackers')}</option>
           {trackers.map((t) => (
@@ -88,7 +88,7 @@ export default function FeedFilters({ filters, onChange, trackers, categories, r
           <select
             value={filters.category}
             onChange={(e) => set({ category: e.target.value })}
-            className="rounded-lg border border-surface-600 bg-surface-700/50 px-3 py-1.5 text-xs text-gray-300 outline-none focus:border-accent-500"
+            className="max-w-full min-w-0 shrink rounded-lg border border-surface-600 bg-surface-700/50 px-3 py-1.5 text-xs text-gray-300 outline-none focus:border-accent-500"
           >
             <option value="">{t('feed.allCategories')}</option>
             {categories.map((c) => (
@@ -102,7 +102,7 @@ export default function FeedFilters({ filters, onChange, trackers, categories, r
           <select
             value={filters.resolution}
             onChange={(e) => set({ resolution: e.target.value })}
-            className="rounded-lg border border-surface-600 bg-surface-700/50 px-3 py-1.5 text-xs text-gray-300 outline-none focus:border-accent-500"
+            className="max-w-full min-w-0 shrink rounded-lg border border-surface-600 bg-surface-700/50 px-3 py-1.5 text-xs text-gray-300 outline-none focus:border-accent-500"
           >
             <option value="">{t('feed.allResolutions')}</option>
             {resolutions.map((r) => (
@@ -124,7 +124,7 @@ export default function FeedFilters({ filters, onChange, trackers, categories, r
         </ChipToggle>
 
         {/* Count */}
-        <span className="ml-auto text-xs text-gray-500">
+        <span className="w-full basis-full text-xs text-gray-500 sm:ml-auto sm:w-auto sm:basis-auto">
           {filteredCount === totalCount
             ? t('feed.releasesCount', { count: totalCount })
             : t('feed.releasesFiltered', { filtered: filteredCount, total: totalCount })}

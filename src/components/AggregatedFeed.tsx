@@ -74,7 +74,7 @@ export default function AggregatedFeed({ refreshKey, feedSources }: AggregatedFe
   }, [torrents, filters]);
 
   return (
-    <section className="mt-8">
+    <section className="mt-8 min-w-0 max-w-full">
       <div className="mb-4">
         <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-gray-400">{t('feed.sectionTitle')}</h2>
         {torrents.length > 0 && (

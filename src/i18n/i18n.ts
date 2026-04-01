@@ -9,43 +9,59 @@ const STORAGE_KEY = 'trackarr-lang';
 export const SUPPORTED_LANGS = ['es', 'en'] as const;
 export type SupportedLang = (typeof SUPPORTED_LANGS)[number];
 
-function getStoredLng(): SupportedLang | undefined {
+function normalizeToSupported(raw: string | null | undefined): SupportedLang | undefined {
+  if (raw == null || raw === '') return undefined;
+  const base = raw.split('-')[0]!.toLowerCase();
+  return (SUPPORTED_LANGS as readonly string[]).includes(base) ? (base as SupportedLang) : undefined;
+}
+
+function readStoredLang(): SupportedLang | undefined {
   if (typeof window === 'undefined') return undefined;
   try {
-    const v = localStorage.getItem(STORAGE_KEY);
-    if (v === 'es' || v === 'en') return v;
+    return normalizeToSupported(localStorage.getItem(STORAGE_KEY));
   } catch {
-    /* ignore */
+    return undefined;
   }
-  return undefined;
 }
 
+/** Writes the active UI language to localStorage (short code: es | en). */
 export function persistLang(lng: string) {
-  if (typeof window === 'undefined') return;
-  try {
-    localStorage.setItem(STORAGE_KEY, lng);
-  } catch {
-    /* ignore */
+  const code = normalizeToSupported(lng);
+  if (!code) return;
+  if (typeof window !== 'undefined') {
+    try {
+      localStorage.setItem(STORAGE_KEY, code);
+    } catch {
+      /* ignore */
+    }
   }
-  document.documentElement.lang = lng;
+  if (typeof document !== 'undefined') {
+    document.documentElement.lang = code;
+  }
 }
 
-void i18n.use(initReactI18next).init({
-  resources: {
-    es: { translation: es },
-    en: { translation: en },
-  },
-  lng: getStoredLng() ?? 'es',
-  fallbackLng: 'es',
-  interpolation: { escapeValue: false },
-});
+const initialLng = readStoredLang() ?? 'es';
+
+void i18n
+  .use(initReactI18next)
+  .init({
+    resources: {
+      es: { translation: es },
+      en: { translation: en },
+    },
+    lng: initialLng,
+    fallbackLng: 'es',
+    supportedLngs: [...SUPPORTED_LANGS],
+    nonExplicitSupportedLngs: true,
+    load: 'languageOnly',
+    interpolation: { escapeValue: false },
+  })
+  .then(() => {
+    persistLang(i18n.language);
+  });
 
 i18n.on('languageChanged', (lng) => {
   persistLang(lng);
 });
-
-if (typeof document !== 'undefined') {
-  document.documentElement.lang = i18n.language;
-}
 
 export default i18n;

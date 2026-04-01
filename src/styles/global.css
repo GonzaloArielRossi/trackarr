@@ -18,6 +18,14 @@
 }
 
 @layer base {
+  html {
+    overflow-x: clip;
+  }
+
+  body {
+    overflow-x: clip;
+  }
+
   ::-webkit-scrollbar {
     width: 6px;
     height: 6px;

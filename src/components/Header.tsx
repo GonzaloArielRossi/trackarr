@@ -16,29 +16,29 @@ export default function Header({ onAddTracker, onManageTrackers, trackerCount }:
   }
 
   return (
-    <header className="border-b border-surface-700 bg-surface-800/80 backdrop-blur-sm sticky top-0 z-40">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
-          <div className="flex items-center gap-3">
+    <header className="sticky top-0 z-40 border-b border-surface-700 bg-surface-800/80 backdrop-blur-sm">
+      <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
+        <div className="flex flex-col gap-3 py-3 sm:h-16 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:py-0">
+          <div className="flex min-w-0 items-center gap-2 sm:gap-3">
             <img
               src="/logo.svg"
               alt=""
               width={36}
               height={36}
-              className="h-9 w-9 shrink-0 rounded-lg shadow-sm ring-1 ring-surface-600"
+              className="h-8 w-8 shrink-0 rounded-lg shadow-sm ring-1 ring-surface-600 sm:h-9 sm:w-9"
               draggable={false}
             />
-            <h1 className="text-xl font-bold tracking-tight text-white">
+            <h1 className="min-w-0 truncate text-lg font-bold tracking-tight text-white sm:text-xl">
               Track<span className="text-accent-400">arr</span>
             </h1>
             {trackerCount > 0 && (
-              <span className="rounded-full bg-surface-600 px-2.5 py-0.5 text-xs font-medium text-gray-300">
+              <span className="max-w-[40vw] shrink-0 truncate rounded-full bg-surface-600 px-2 py-0.5 text-[11px] font-medium text-gray-300 sm:max-w-none sm:px-2.5 sm:text-xs">
                 {t('header.trackerCount', { count: trackerCount })}
               </span>
             )}
           </div>
-          <div className="flex items-center gap-2">
-            <div className="mr-1 flex rounded-lg border border-surface-600 bg-surface-800 p-0.5">
+          <div className="flex min-w-0 flex-wrap items-center gap-2 sm:shrink-0 sm:justify-end">
+            <div className="flex rounded-lg border border-surface-600 bg-surface-800 p-0.5">
               {SUPPORTED_LANGS.map((lng) => (
                 <button
                   key={lng}
@@ -59,7 +59,7 @@ export default function Header({ onAddTracker, onManageTrackers, trackerCount }:
               <button
                 type="button"
                 onClick={onManageTrackers}
-                className="rounded-lg border border-surface-600 bg-surface-700 px-3 py-2 text-sm font-medium text-gray-200 transition-colors hover:border-surface-500 hover:bg-surface-600"
+                className="rounded-lg border border-surface-600 bg-surface-700 px-2.5 py-2 text-xs font-medium text-gray-200 transition-colors hover:border-surface-500 hover:bg-surface-600 sm:px-3 sm:text-sm"
               >
                 {t('header.manage')}
               </button>
@@ -67,12 +67,13 @@ export default function Header({ onAddTracker, onManageTrackers, trackerCount }:
             <button
               type="button"
               onClick={onAddTracker}
-              className="inline-flex items-center gap-2 rounded-lg bg-accent-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-accent-600 active:bg-accent-600/80"
+              aria-label={t('header.addTracker')}
+              className="inline-flex max-w-full min-w-0 items-center gap-1.5 rounded-lg bg-accent-500 px-3 py-2 text-xs font-medium text-white transition-colors hover:bg-accent-600 active:bg-accent-600/80 sm:gap-2 sm:px-4 sm:text-sm"
             >
-              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg className="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M12 5v14M5 12h14" strokeLinecap="round" />
               </svg>
-              {t('header.addTracker')}
+              <span className="min-w-0 truncate">{t('header.addTracker')}</span>
             </button>
           </div>
         </div>

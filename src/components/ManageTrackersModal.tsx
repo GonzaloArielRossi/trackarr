@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
+import { useBodyScrollLock } from '@/hooks/useBodyScrollLock';
 import type { TrackerPublic } from '@/lib/types';
 import TrackerIcon from './TrackerIcon';
 
@@ -12,15 +13,31 @@ interface ManageTrackersModalProps {
 
 export default function ManageTrackersModal({ open, trackers, onClose, onEdit }: ManageTrackersModalProps) {
   const { t } = useTranslation();
+  useBodyScrollLock(open);
 
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="fixed inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative w-full max-w-sm rounded-2xl border border-surface-600 bg-surface-800 p-5 shadow-2xl">
-        <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-white">{t('manage.title')}</h2>
+    <div
+      className="fixed inset-0 z-50 overflow-y-auto overscroll-contain"
+      role="presentation"
+    >
+      <div
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm"
+        aria-hidden
+        onClick={onClose}
+      />
+      <div className="relative z-10 flex min-h-full justify-center p-4 sm:items-center sm:py-8">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="manage-trackers-title"
+          className="relative my-4 w-full max-w-sm rounded-2xl border border-surface-600 bg-surface-800 p-5 shadow-2xl sm:my-0"
+        >
+        <div className="mb-4 flex items-center justify-between gap-2">
+          <h2 id="manage-trackers-title" className="text-lg font-semibold text-white">
+            {t('manage.title')}
+          </h2>
           <button
             type="button"
             onClick={onClose}
@@ -31,7 +48,7 @@ export default function ManageTrackersModal({ open, trackers, onClose, onEdit }:
             </svg>
           </button>
         </div>
-        <ul className="max-h-72 space-y-2 overflow-y-auto">
+        <ul className="max-h-[min(18rem,50dvh)] space-y-2 overflow-y-auto overscroll-y-contain touch-pan-y">
           {trackers.map((tracker) => (
             <li key={tracker.id}>
               <button
@@ -58,6 +75,7 @@ export default function ManageTrackersModal({ open, trackers, onClose, onEdit }:
             </li>
           ))}
         </ul>
+        </div>
       </div>
     </div>
   );
